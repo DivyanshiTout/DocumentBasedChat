@@ -16,4 +16,8 @@ pydantic
 python-multipart
 chromadb
 torchvision==0.22.1
+setuptools>=42
+wheel
+build
+
 # pip install torch==2.0.1 torchvision==0.15.2 
