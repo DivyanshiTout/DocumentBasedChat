@@ -1,0 +1,19 @@
+docx
+fastapi
+pdf2image
+numpy==1.24.4
+pytesseract
+unstructured_inference
+unstructured_pytesseract
+pdfminer.six
+pi-heif
+unstructured
+uvicorn
+langchain_community
+langchain_ollama
+ollama
+pydantic
+python-multipart
+chromadb
+torchvision==0.22.1
+# pip install torch==2.0.1 torchvision==0.15.2 

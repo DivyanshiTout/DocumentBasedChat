@@ -1,0 +1,80 @@
+# === Python artifacts ===
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.pyo
+*.pyd
+
+# === Virtual environments ===
+venv/
+env/
+myenv/
+.venv/
+
+# === Model checkpoints and weights ===
+*.pth
+*.pt
+*.onnx
+*.ckpt
+*.h5
+
+# === Compiled libs & binaries ===
+*.so
+*.dylib
+*.dll
+*.a
+*.o
+
+# === Databases & caches ===
+*.db
+*.sqlite3
+*.log
+
+# === Wav2Lip / Video / TTS outputs ===
+*.wav
+*.mp3
+*.mp4
+*.avi
+temp/
+output/
+*.srt
+
+# === Notebook junk ===
+.ipynb_checkpoints/
+*.ipynb
+
+# === Large packages accidentally committed ===
+**/site-packages/
+**/__pycache__/
+
+# === System files ===
+.DS_Store
+Thumbs.db
+
+# === Environment/Config ===
+.env
+*.env
+.env.*
+
+# === VSCode / IDEs ===
+.vscode/
+.idea/
+# Ignore virtual env and temp/model data
+myenv/
+__pycache__/
+*.pth
+*.pt
+*.mp3
+*.png
+*.mp4
+*.avi
+*.zip
+*.whl
+*.log
+*.npy
+data/
+results/
+generated_videos/
+temp/
+temp_frames/
+output.mp3

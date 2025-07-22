@@ -1,0 +1,27 @@
+<form onsubmit="generateVideo(event)">
+  <input type="text" id="text" placeholder="Say something..." />
+  <button type="submit">Generate</button>
+</form>
+
+<video id="video" controls autoplay></video>
+
+<script>
+async function generateVideo(e) {
+  e.preventDefault();
+  const text = document.getElementById("text").value;
+
+  const formData = new FormData();
+  formData.append("text", text);
+
+  const res = await fetch("http://localhost:8000/generate_lipsync_video", {
+    method: "POST",
+    mode: 'cors',
+    body: formData
+  });
+
+  const data = await res.json();
+  if (data.video_url) {
+    document.getElementById("video").src = data.video_url;
+  }
+}
+</script>
