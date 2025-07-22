@@ -12,10 +12,22 @@ from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.runnables import RunnableLambda
+from dotenv import load_dotenv
+from langchain_community.vectorstores import Qdrant
+from qdrant_client import QdrantClient
+
+
+
+load_dotenv()
 
 
 import logging
 logger = logging.getLogger(__name__)
+
+QDRANT_URL = os.getenv("QDRANT_URL")
+QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
+QDRANT_COLLECTION = os.getenv("QDRANT_COLLECTION", "doc-qa")
+
 
 PERSIST_DIRECTORY = os.path.join("data", "vectors")
 
@@ -177,12 +189,23 @@ def handle_document_upload(file_category_pairs):
         all_chunks.extend(chunks)
 
     embeddings = OllamaEmbeddings(model="nomic-embed-text")
-    vector_db = Chroma.from_documents(
+    qdrant_client = QdrantClient(
+        url=QDRANT_URL,
+        api_key=QDRANT_API_KEY,
+    )
+    # vector_db = Chroma.from_documents(
+    #     documents=all_chunks,
+    #     embedding=embeddings,
+    #     persist_directory=PERSIST_DIRECTORY,
+    #     collection_name="multi_file_rag"
+    # )
+    vector_db = Qdrant.from_documents(
         documents=all_chunks,
         embedding=embeddings,
-        persist_directory=PERSIST_DIRECTORY,
-        collection_name="multi_file_rag"
+        client=qdrant_client,
+        collection_name=QDRANT_COLLECTION
     )
+
     return vector_db
 
 

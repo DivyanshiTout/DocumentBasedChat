@@ -59,7 +59,7 @@ def connect_qdrant():
         vector_db = Qdrant(
             client=client,
             collection_name=QDRANT_COLLECTION,
-            embedding_function=embeddings,
+            Embeddings=embeddings,
         )
         print("✅ Connected to Qdrant and collection ready.")
     except Exception as e:
@@ -89,7 +89,7 @@ async def upload_documents(
                 temp_files.append((tmp.name, category, display_name))
 
         # Update handle_document_upload() to push to Qdrant
-        vector_db = handle_document_upload(temp_files, vector_db)
+        vector_db = handle_document_upload(temp_files)
 
         return {"status": "success", "message": "Documents processed."}
     except Exception as e:
