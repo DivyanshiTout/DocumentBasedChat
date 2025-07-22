@@ -19,5 +19,6 @@ torchvision==0.22.1
 setuptools>=42
 wheel
 build
+edge_tts
 
 # pip install torch==2.0.1 torchvision==0.15.2 
