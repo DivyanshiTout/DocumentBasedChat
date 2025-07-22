@@ -20,5 +20,5 @@ setuptools>=42
 wheel
 build
 edge_tts
-
+qdrant-client 
 # pip install torch==2.0.1 torchvision==0.15.2 
