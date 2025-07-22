@@ -116,7 +116,7 @@ async def upload_documents(
         file_data_list = []
         for file, category,display_name in zip(files, categories,display_names):
             suffix = os.path.splitext(file.filename)[1]
-            with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+            with tempfile.NamedTemporaryFile(delete=False, suffix=suffix, dir="/tmp") as tmp:
                 tmp.write(await file.read())
                 temp_files.append((tmp.name, category,display_name))
 
