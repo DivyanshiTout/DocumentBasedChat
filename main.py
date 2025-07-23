@@ -33,8 +33,6 @@ CHECKPOINT_PATH = os.path.join(WAV2LIP_DIR, "checkpoints", "wav2lip_gan.pth")
 STATIC_IMG = os.path.join(WAV2LIP_DIR, "samples", "aigirl.jpeg")
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "temp")
 
-OUTPUT_DIR = "/tmp"
-print("OUTPUT_DIR",OUTPUT_DIR)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -112,7 +110,7 @@ async def ask_question(
     if not vector_db:
         return JSONResponse(status_code=400, content={"error": "No documents uploaded."})
     try:
-        response = process_question(question, vector_db, user_role)
+        response = process_question(question, vector_db, selected_model, user_role)
         return {"response": response}
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
@@ -205,7 +203,7 @@ async def ask(question: str = Form(...), user_role: str = Form(...)):
                 except Exception as e:
                     print(f"Failed to delete {file}: {e}")
 
-        ai_response = process_question(question, vector_db, user_role)
+        ai_response = process_question(question, vector_db, selected_model, user_role)
         unique_id = str(uuid.uuid4())
         audio_path = f"{OUTPUT_DIR}/{unique_id}.wav"
         raw_video_path = f"{OUTPUT_DIR}/{unique_id}_raw.mp4"

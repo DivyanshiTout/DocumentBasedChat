@@ -21,4 +21,5 @@ wheel
 build
 edge_tts
 qdrant-client 
+exceptions
 # pip install torch==2.0.1 torchvision==0.15.2 
