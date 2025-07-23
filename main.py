@@ -6,6 +6,8 @@ from langchain_community.vectorstores import Qdrant
 from langchain_ollama import OllamaEmbeddings
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
+from langchain.embeddings import HuggingFaceEmbeddings
+
 
 import uuid
 import os
@@ -49,18 +51,20 @@ VECTOR_COLLECTION_NAME = "doc_qa"
 QDRANT_URL = os.getenv("QDRANT_URL")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
+
 @app.on_event("startup")
 def load_persisted_vector_db():
     global vector_db
     try:
-        embeddings = OllamaEmbeddings(model="nomic-embed-text")
+        embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+
         client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
 
         existing = [c.name for c in client.get_collections().collections]
         if VECTOR_COLLECTION_NAME not in existing:
             client.recreate_collection(
                 collection_name=VECTOR_COLLECTION_NAME,
-                vectors_config=VectorParams(size=768, distance=Distance.COSINE),
+                vectors_config=VectorParams(size=384, distance=Distance.COSINE),
             )
 
         vector_db = Qdrant(
@@ -68,9 +72,10 @@ def load_persisted_vector_db():
             collection_name=VECTOR_COLLECTION_NAME,
             embeddings=embeddings,
         )
-        print("✅ Qdrant Cloud vector DB loaded or initialized.")
+        print("✅ Qdrant Cloud vector DB loaded with HuggingFace embeddings.")
     except Exception as e:
         print("❌ Failed to load Qdrant DB:", e)
+
 
 @app.get("/models")
 def list_models():
